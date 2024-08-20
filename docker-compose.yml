@@ -1,6 +1,6 @@
 services:
   
-  ttl-sync-pre-processor:
+  pre-processor:
     env_file:
       - dev.env
     image: pennsieve/ttl-sync-pre-processor

@@ -10,14 +10,13 @@ import (
 var logger = logging.PackageLogger("main")
 
 func main() {
-	logger.Info("Hello")
 	m, err := preprocessor.FromEnv()
 	if err != nil {
 		logger.Error("error creating preprocessor", slog.Any("error", err))
 		os.Exit(1)
 	}
 
-	logger.Info("created ExternalFilesPreProcessor",
+	logger.Info("created TTLSyncPreProcessor",
 		slog.String("integrationID", m.IntegrationID),
 		slog.String("inputDirectory", m.InputDirectory),
 		slog.String("outputDirectory", m.OutputDirectory),

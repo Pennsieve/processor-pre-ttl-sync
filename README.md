@@ -3,6 +3,8 @@
 Given a dataset node ID, produces the external URLs for the latest TTL files in the format expected
 by [processor-pre-external-files](https://github.com/Pennsieve/processor-pre-external-files)
 
+The file is written to `$INPUT_DIR/external-files.json`
+
 To build:
 
 `docker build -t pennsieve/ttl-sync-pre-processor .`

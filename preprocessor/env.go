@@ -12,6 +12,8 @@ const SessionTokenKey = "SESSION_TOKEN"
 const PennsieveAPIHostKey = "PENNSIEVE_API_HOST"
 const PennsieveAPI2HostKey = "PENNSIEVE_API_HOST2"
 
+const ProdTTLHost = "https://cassava.ucsd.edu"
+
 func FromEnv() (*TTLSyncPreProcessor, error) {
 	integrationID, err := LookupRequiredEnvVar(IntegrationIDKey)
 	if err != nil {
@@ -42,7 +44,8 @@ func FromEnv() (*TTLSyncPreProcessor, error) {
 		outputDirectory,
 		sessionToken,
 		apiHost,
-		api2Host), nil
+		api2Host,
+		ProdTTLHost), nil
 }
 
 func LookupRequiredEnvVar(key string) (string, error) {

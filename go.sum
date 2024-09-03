@@ -2,8 +2,10 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/google/uuid v1.6.0 h1:NIvaJDMOsjHA8n1jAhLSgzrAzy1Hgr+hNrb57e+94F0=
 github.com/google/uuid v1.6.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/pennsieve/processor-pre-external-files/service v0.0.0-20240829161044-bdc1287f4df6 h1:g39psgMsM7IYgTUW83XcvHDH4ujnO6jGf4+4OemBS6Q=
-github.com/pennsieve/processor-pre-external-files/service v0.0.0-20240829161044-bdc1287f4df6/go.mod h1:093KHBU6h4euZGXJGDbhMESM9oNwJGY1DkKFwCV/H5o=
+github.com/pennsieve/processor-pre-external-files/client v0.0.0 h1:Tfln00kWIynTJiWtawEU7Jap4MbBwBW9weZgMNjcR30=
+github.com/pennsieve/processor-pre-external-files/client v0.0.0/go.mod h1:GLhbrJKm77KLlLusBn9/QkY43LcC1nKvw3OJ8HuwZWM=
+github.com/pennsieve/processor-pre-external-files/service v0.0.0 h1:tkYe5wIbZvVoBrGqf/dfwTifJHwAtAI3USJLu2XdUrw=
+github.com/pennsieve/processor-pre-external-files/service v0.0.0/go.mod h1:TLQ9x5jeEUzCkjSqqFNkq3q2iGdRisiS6yn2eU1Y2Ls=
 github.com/pennsieve/processor-pre-metadata v0.0.0-20240829200621-01175e9a81cb h1:WbuPKDDUXrJ1SHAdlX6sHpIwdygFQBh5scZsgJtBnOc=
 github.com/pennsieve/processor-pre-metadata v0.0.0-20240829200621-01175e9a81cb/go.mod h1:9X84Hq5DCNzI8G+Xl/D/Fd0iJXpuTy7YWOQQghEtOSs=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=

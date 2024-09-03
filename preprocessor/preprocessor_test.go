@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/google/uuid"
-	extfiles "github.com/pennsieve/processor-pre-external-files/service/models"
+	extfiles "github.com/pennsieve/processor-pre-external-files/client/models"
 	"github.com/pennsieve/processor-pre-ttl-sync/models"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

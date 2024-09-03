@@ -3,9 +3,9 @@ package preprocessor
 import (
 	"encoding/json"
 	"fmt"
-	extfilesmodels "github.com/pennsieve/processor-pre-external-files/service/models"
-	extfiles "github.com/pennsieve/processor-pre-external-files/service/preprocessor"
-	metadata "github.com/pennsieve/processor-pre-metadata/preprocessor"
+	extfiles "github.com/pennsieve/processor-pre-external-files/client/models"
+	extfilesproc "github.com/pennsieve/processor-pre-external-files/service/preprocessor"
+	metadataproc "github.com/pennsieve/processor-pre-metadata/preprocessor"
 	"github.com/pennsieve/processor-pre-ttl-sync/logging"
 	"github.com/pennsieve/processor-pre-ttl-sync/pennsieve"
 	"github.com/pennsieve/processor-pre-ttl-sync/util"
@@ -31,8 +31,8 @@ type TTLSyncPreProcessor struct {
 	OutputDirectory       string
 	Pennsieve             *pennsieve.Session
 	TTLURLPattern         string
-	ExternalFileProcessor *extfiles.ExternalFilesPreProcessor
-	MetadataProcessor     *metadata.MetadataPreProcessor
+	ExternalFileProcessor *extfilesproc.ExternalFilesPreProcessor
+	MetadataProcessor     *metadataproc.MetadataPreProcessor
 }
 
 func NewTTLSyncPreProcessor(
@@ -45,10 +45,10 @@ func NewTTLSyncPreProcessor(
 	ttlHost string) *TTLSyncPreProcessor {
 	session := pennsieve.NewSession(sessionToken, apiHost, api2Host)
 
-	metadataPreProcessor := metadata.NewMetadataPreProcessor(integrationID, inputDirectory, outputDirectory, sessionToken, apiHost, api2Host, 0)
+	metadataPreProcessor := metadataproc.NewMetadataPreProcessor(integrationID, inputDirectory, outputDirectory, sessionToken, apiHost, api2Host, 0)
 
 	externalFilesConfigPath := filepath.Join(inputDirectory, ExternalFilesConfigName)
-	extFilePreProcessor := extfiles.NewExternalFilesPreProcessor(integrationID, inputDirectory, outputDirectory, externalFilesConfigPath)
+	extFilePreProcessor := extfilesproc.NewExternalFilesPreProcessor(integrationID, inputDirectory, outputDirectory, externalFilesConfigPath)
 
 	ttlURLPattern := ttlHost + TTLEndpointPattern
 	return &TTLSyncPreProcessor{
@@ -84,10 +84,10 @@ func (m *TTLSyncPreProcessor) Run() error {
 	if err != nil {
 		return err
 	}
-	var externalFiles extfilesmodels.ExternalFileParams
+	var externalFiles extfiles.ExternalFileParams
 	for _, ttlFile := range TTLFileNames {
 		ttlFileURL := fmt.Sprintf(m.TTLURLPattern, datasetUUID, ttlFile)
-		externalFiles = append(externalFiles, extfilesmodels.ExternalFileParam{
+		externalFiles = append(externalFiles, extfiles.ExternalFileParam{
 			URL:  ttlFileURL,
 			Name: ttlFile,
 		})

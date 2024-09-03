@@ -4,7 +4,8 @@ go 1.21
 
 require (
 	github.com/google/uuid v1.6.0
-	github.com/pennsieve/processor-pre-external-files/service v0.0.0-20240829161044-bdc1287f4df6
+	github.com/pennsieve/processor-pre-external-files/client v0.0.0
+	github.com/pennsieve/processor-pre-external-files/service v0.0.0
 	github.com/pennsieve/processor-pre-metadata v0.0.0-20240829200621-01175e9a81cb
 	github.com/stretchr/testify v1.9.0
 )

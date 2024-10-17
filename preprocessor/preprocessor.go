@@ -3,7 +3,9 @@ package preprocessor
 import (
 	"encoding/json"
 	"fmt"
-	extfiles "github.com/pennsieve/processor-pre-external-files/models"
+	extfiles "github.com/pennsieve/processor-pre-external-files/client/models"
+	extfilesproc "github.com/pennsieve/processor-pre-external-files/service/preprocessor"
+	metadataproc "github.com/pennsieve/processor-pre-metadata/service/preprocessor"
 	"github.com/pennsieve/processor-pre-ttl-sync/logging"
 	"github.com/pennsieve/processor-pre-ttl-sync/pennsieve"
 	"github.com/pennsieve/processor-pre-ttl-sync/util"
@@ -17,17 +19,20 @@ var logger = logging.PackageLogger("preprocessor")
 
 const DatasetNodeIDPrefix = "N:dataset:"
 
-const TTLEndpointPattern = "https://cassava.ucsd.edu/sparc/datasets/%s/LATEST/%s"
+const TTLEndpointPattern = "/sparc/datasets/%s/LATEST/%s"
 
 var TTLFileNames = []string{"curation-export.ttl", "curation-export.json"}
 
 const ExternalFilesConfigName = "external-files.json"
 
 type TTLSyncPreProcessor struct {
-	IntegrationID   string
-	InputDirectory  string
-	OutputDirectory string
-	Pennsieve       *pennsieve.Session
+	IntegrationID         string
+	InputDirectory        string
+	OutputDirectory       string
+	Pennsieve             *pennsieve.Session
+	TTLURLPattern         string
+	ExternalFileProcessor *extfilesproc.ExternalFilesPreProcessor
+	MetadataProcessor     *metadataproc.MetadataPreProcessor
 }
 
 func NewTTLSyncPreProcessor(
@@ -36,13 +41,24 @@ func NewTTLSyncPreProcessor(
 	outputDirectory string,
 	sessionToken string,
 	apiHost string,
-	api2Host string) *TTLSyncPreProcessor {
+	api2Host string,
+	ttlHost string) *TTLSyncPreProcessor {
 	session := pennsieve.NewSession(sessionToken, apiHost, api2Host)
+
+	metadataPreProcessor := metadataproc.NewMetadataPreProcessor(integrationID, inputDirectory, outputDirectory, sessionToken, apiHost, api2Host, 0)
+
+	externalFilesConfigPath := filepath.Join(inputDirectory, ExternalFilesConfigName)
+	extFilePreProcessor := extfilesproc.NewExternalFilesPreProcessor(integrationID, inputDirectory, outputDirectory, externalFilesConfigPath)
+
+	ttlURLPattern := ttlHost + TTLEndpointPattern
 	return &TTLSyncPreProcessor{
-		IntegrationID:   integrationID,
-		InputDirectory:  inputDirectory,
-		OutputDirectory: outputDirectory,
-		Pennsieve:       session,
+		IntegrationID:         integrationID,
+		InputDirectory:        inputDirectory,
+		OutputDirectory:       outputDirectory,
+		Pennsieve:             session,
+		ExternalFileProcessor: extFilePreProcessor,
+		MetadataProcessor:     metadataPreProcessor,
+		TTLURLPattern:         ttlURLPattern,
 	}
 }
 
@@ -53,6 +69,15 @@ func (m *TTLSyncPreProcessor) Run() error {
 		return err
 	}
 	datasetID := integration.DatasetNodeID
+
+	logger.Info("Running TTL sync", slog.String("datasetID", datasetID))
+
+	m.MetadataProcessor = m.MetadataProcessor.WithDatasetID(datasetID)
+
+	if err := m.MetadataProcessor.Run(); err != nil {
+		return err
+	}
+
 	logger.Info("constructing external file config for dataset", slog.String("datasetID", datasetID))
 
 	datasetUUID, err := ExtractDatasetUUID(datasetID)
@@ -61,7 +86,7 @@ func (m *TTLSyncPreProcessor) Run() error {
 	}
 	var externalFiles extfiles.ExternalFileParams
 	for _, ttlFile := range TTLFileNames {
-		ttlFileURL := fmt.Sprintf(TTLEndpointPattern, datasetUUID, ttlFile)
+		ttlFileURL := fmt.Sprintf(m.TTLURLPattern, datasetUUID, ttlFile)
 		externalFiles = append(externalFiles, extfiles.ExternalFileParam{
 			URL:  ttlFileURL,
 			Name: ttlFile,
@@ -69,7 +94,7 @@ func (m *TTLSyncPreProcessor) Run() error {
 		logger.Info("added TTL file URL", slog.String("url", ttlFileURL))
 	}
 
-	externalFilesConfigPath := filepath.Join(m.InputDirectory, ExternalFilesConfigName)
+	externalFilesConfigPath := m.ExternalFileProcessor.ConfigFile
 	externalFilesConfigFile, err := os.Create(externalFilesConfigPath)
 	if err != nil {
 		return fmt.Errorf("error creating file %s: %w", externalFilesConfigPath, err)
@@ -80,7 +105,18 @@ func (m *TTLSyncPreProcessor) Run() error {
 		return fmt.Errorf("error encoding external file config to path %s: %w", externalFilesConfigPath, err)
 	}
 	logger.Info("wrote external files config", slog.String("path", externalFilesConfigPath))
+	if err := m.downloadTTLFiles(); err != nil {
+		return err
+	}
+	return nil
+}
 
+func (m *TTLSyncPreProcessor) downloadTTLFiles() error {
+	logger.Info("downloading TTL files")
+	if err := m.ExternalFileProcessor.Run(); err != nil {
+		return err
+	}
+	logger.Info("downloaded TTL files")
 	return nil
 }
 

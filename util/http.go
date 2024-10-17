@@ -2,7 +2,7 @@ package util
 
 import (
 	"fmt"
-	"github.com/pennsieve/processor-pre-external-files/logging"
+	"github.com/pennsieve/processor-pre-ttl-sync/logging"
 	"io"
 	"net/http"
 )

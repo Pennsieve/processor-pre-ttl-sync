@@ -22,6 +22,7 @@ func main() {
 		slog.String("outputDirectory", m.OutputDirectory),
 		slog.String("apiHost", m.Pennsieve.APIHost),
 		slog.String("api2Host", m.Pennsieve.API2Host),
+		slog.String("curationExportURLPattern", m.TTLURLPattern),
 	)
 
 	if err := m.Run(); err != nil {

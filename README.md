@@ -24,3 +24,8 @@ To run integration test:
 2. Copy `dev.env.example` to `dev.env`
 3. In dev.env update SESSION_TOKEN with a valid token and INTEGRATION_ID with the id from the first step.
 4. Run `./run-integration-test.sh dev.env`
+
+If `ENVIRONMENT=dev` is in `dev.env`, then the processor will try to fetch the curation-export files from a test server
+and you will have to make sure that there are files there to find.
+
+If `ENVIRONMENT=prod` is in `dev.env', the processor will use the real SPARC endpoint to find the curation-export files.

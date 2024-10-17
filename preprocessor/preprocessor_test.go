@@ -72,7 +72,12 @@ func TestRun(t *testing.T) {
 		filePath: filepath.Join(inputDir, "metadata", "schema", "graphSchema.json"),
 		urlPath:  fmt.Sprintf("/models/v1/datasets/%s/concepts/schema/graph", datasetId),
 		content:  []byte("[]"),
-	})
+	},
+		ExpectedFile{
+			filePath: filepath.Join(inputDir, "metadata", "schema", "relationships.json"),
+			urlPath:  fmt.Sprintf("/models/datasets/%s/relationships", datasetId),
+			content:  []byte("[]"),
+		})
 
 	mockServer := newMockServer(t, integrationID, datasetId, expectedFiles)
 	defer mockServer.Close()

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	extfiles "github.com/pennsieve/processor-pre-external-files/client/models"
 	extfilesproc "github.com/pennsieve/processor-pre-external-files/service/preprocessor"
-	metadataproc "github.com/pennsieve/processor-pre-metadata/preprocessor"
+	metadataproc "github.com/pennsieve/processor-pre-metadata/service/preprocessor"
 	"github.com/pennsieve/processor-pre-ttl-sync/logging"
 	"github.com/pennsieve/processor-pre-ttl-sync/pennsieve"
 	"github.com/pennsieve/processor-pre-ttl-sync/util"

@@ -21,7 +21,7 @@ const DatasetNodeIDPrefix = "N:dataset:"
 
 const TTLEndpointPattern = "/sparc/datasets/%s/LATEST/%s"
 
-var TTLFileNames = []string{"curation-export.ttl", "curation-export.json"}
+var TTLFileNames = []string{"curation-export.json"}
 
 const ExternalFilesConfigName = "external-files.json"
 

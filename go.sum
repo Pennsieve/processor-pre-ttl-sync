@@ -8,8 +8,8 @@ github.com/pennsieve/processor-pre-external-files/service v0.0.1 h1:XpflU1fi7g5O
 github.com/pennsieve/processor-pre-external-files/service v0.0.1/go.mod h1:/hfwbaNMdgszXkMePvEsBsH8QCUPL8h7McV2UlM0G/8=
 github.com/pennsieve/processor-pre-metadata/client v0.0.1 h1:5Jlp1+hXTRhoKx5+vixetIHc7nzgxQTauo1ajj/wV1c=
 github.com/pennsieve/processor-pre-metadata/client v0.0.1/go.mod h1:2TzJ5tqUMbEWi+cKeotjKK/3mvX6d0Jq4ZdLjwMfjWw=
-github.com/pennsieve/processor-pre-metadata/service v0.0.1 h1:bFp+01velZKm6cjEcUwvxXu31KLjZOUB7Gh89gygck4=
-github.com/pennsieve/processor-pre-metadata/service v0.0.1/go.mod h1:nQNy06jCKdCQLj7b14nXCrTGHEYGNHWHcP5Dzj/wABs=
+github.com/pennsieve/processor-pre-metadata/service v0.0.2 h1:J3iTTf2LmKVGQhLnyJj6hpswwiKVuhNbYgQ2POGm4dA=
+github.com/pennsieve/processor-pre-metadata/service v0.0.2/go.mod h1:nQNy06jCKdCQLj7b14nXCrTGHEYGNHWHcP5Dzj/wABs=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/testify v1.9.0 h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsTg=

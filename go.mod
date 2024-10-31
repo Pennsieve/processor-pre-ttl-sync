@@ -6,7 +6,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/pennsieve/processor-pre-external-files/client v0.0.1
 	github.com/pennsieve/processor-pre-external-files/service v0.0.1
-	github.com/pennsieve/processor-pre-metadata/service v0.0.1
+	github.com/pennsieve/processor-pre-metadata/service v0.0.2
 	github.com/stretchr/testify v1.9.0
 )
 

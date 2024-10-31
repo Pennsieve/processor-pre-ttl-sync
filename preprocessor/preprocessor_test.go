@@ -70,7 +70,7 @@ func TestRun(t *testing.T) {
 	// it with the correct parameters
 	expectedFiles := append(expectedTTLFiles, ExpectedFile{
 		filePath: filepath.Join(inputDir, "metadata", "schema", "graphSchema.json"),
-		urlPath:  fmt.Sprintf("/models/v1/datasets/%s/concepts/schema/graph", datasetId),
+		urlPath:  fmt.Sprintf("/models/datasets/%s/concepts/schema/graph", datasetId),
 		content:  []byte("[]"),
 	},
 		ExpectedFile{

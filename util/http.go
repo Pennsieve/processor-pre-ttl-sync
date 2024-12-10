@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/pennsieve/processor-pre-ttl-sync/logging"
 	"io"
+	"log/slog"
 	"net/http"
 )
 
@@ -11,7 +12,10 @@ var logger = logging.PackageLogger("util")
 
 func CloseAndWarn(response *http.Response) {
 	if err := response.Body.Close(); err != nil {
-		logger.Warn("error closing response body from %s %s: %w", response.Request.Method, response.Request.URL, err)
+		logger.Warn("error closing response body",
+			slog.String("method", response.Request.Method),
+			slog.String("url", response.Request.URL.String()),
+			slog.Any("error", err))
 	}
 }
 
@@ -24,7 +28,10 @@ func Invoke(request *http.Request) (*http.Response, error) {
 	if err := checkHTTPStatus(res); err != nil {
 		// if there was an error, checkHTTPStatus read the body
 		if closeError := res.Body.Close(); closeError != nil {
-			logger.Warn("error closing response body from %s %s: %w", request.Method, request.URL, closeError)
+			logger.Warn("error closing response body from http status error",
+				slog.String("method", request.Method),
+				slog.String("url", request.URL.String()),
+				slog.Any("error", closeError))
 		}
 		return nil, err
 	}

@@ -1,9 +1,8 @@
 # TTL Sync Pre-Processor
 
-Given a dataset node ID, produces the external URLs for the latest TTL files in the format expected
-by [processor-pre-external-files](https://github.com/Pennsieve/processor-pre-external-files)
+Given a dataset node ID, runs [processor-pre-external-files](https://github.com/Pennsieve/processor-pre-external-files) to download the latest curation export file for the given dataset to `$INPUT_DIR`
 
-The file is written to `$INPUT_DIR/external-files.json`
+Also runs [processor-pre-metadata](https://github.com/Pennsieve/processor-pre-metadata) to download the current metadata for the dataset to `$INPUT_DIR`.
 
 To build:
 
